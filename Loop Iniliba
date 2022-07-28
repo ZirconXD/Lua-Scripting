@@ -1,0 +1,207 @@
+HOMEDM=1
+base = {}
+top = {}
+bot = {}
+auth1 = {}
+auth2 = {}
+rst = {}
+xpos = {}
+ypos = {}
+function MENU()
+A = gg.choice({"Teleport To The Secret Map","Download The List ","⚡Start The Loop","❌Exit"},nil,"⚠Remember to load the list before start-loop⚠")
+if A == 1 then TP() end
+if A == 2 then LOAD() end
+if A == 3 then BOSS() end
+if A == 4 then os.exit() end
+HOMEDM=-1
+end
+
+function TP()
+gg.clearResults()
+r = {"-88"}
+gg.setRanges(gg.REGION_JAVA_HEAP)
+gg.searchNumber("11001" , gg.TYPE_DWORD)
+gg.refineNumber("11001", gg.TYPE_DWORD)
+q = gg.getResults(1)
+
+for i = 1,#r do
+            p = {}
+			p[i] = {}
+		    p[i].address = q[1].address + r[i]
+			p[i].flags = 4 
+			p[i].value = 16384
+			p[i].freeze = false
+			gg.setValues(p)
+			gg.addListItems(p) 
+	end	
+
+r = {"-84"}
+for i = 1,#r do
+            p = {}
+			p[i] = {}
+		    p[i].address = q[1].address + r[i]
+			p[i].flags = 4 
+			p[i].value = 24832
+			p[i].freeze = false
+			gg.setValues(p)
+			gg.addListItems(p) 
+	end	
+r = {"-100"}
+for i = 1,#r do
+            p = {}
+			p[i] = {}
+		    p[i].address = q[1].address + r[i]
+			p[i].flags = 4 
+			p[i].value = 71200
+			p[i].freeze = false
+			gg.setValues(p)
+	end	
+	r = {"204"}
+for i = 1,#r do
+            p = {}
+			p[i] = {}
+		    p[i].address = q[1].address + r[i]
+			p[i].flags = 4 
+			p[i].value = 999999
+			p[i].freeze = false
+			gg.setValues(p)
+gg.clearResults()
+	end	
+end
+
+
+
+function LOAD()
+gg.clearResults()
+gg.setRanges(gg.REGION_JAVA_HEAP)
+	gg.searchNumber("11001" , gg.TYPE_DWORD)
+	gg.refineNumber("11001", gg.TYPE_DWORD)
+	q = gg.getResults(1)
+
+	base[1] = {}
+	base[1].name = "base"
+	base[1].address = q[1].address
+	base[1].flags = q[1].flags
+	base[1].value = q[1].value
+	base[1].freeze = false
+	gg.addListItems(base) 
+
+	top[1] = {}
+	top[1].name = "top"
+	top[1].address = q[1].address - 104
+	top[1].flags = q[1].flags
+	top[1].value = q[1].value
+	top[1].freeze = false
+	gg.addListItems(top) 
+
+	bot[1] = {}
+	bot[1].name = "bot"
+	bot[1].address = q[1].address - 100
+	bot[1].flags = q[1].flags
+	bot[1].value = q[1].value
+	bot[1].freeze = false
+	gg.addListItems(bot)
+	
+	auth1[1] = {}
+	auth1[1].name = "auth1"
+	auth1[1].address = q[1].address - 88
+	auth1[1].flags = q[1].flags
+	auth1[1].value = q[1].value
+	auth1[1].freeze = false
+	gg.addListItems(auth1)
+	
+	auth2[1] = {}
+	auth2[1].name = "auth2"
+	auth2[1].address = q[1].address - 84
+	auth2[1].flags = q[1].flags
+	auth2[1].value = q[1].value
+	auth2[1].freeze = false
+	gg.addListItems(auth2) 
+
+	rst[1] = {}
+	rst[1].name = "rst"
+	rst[1].address = q[1].address + 204
+	rst[1].flags = q[1].flags
+	rst[1].value = q[1].value
+	rst[1].freeze = false
+	gg.addListItems(rst) 
+	gg.clearResults()
+	gg.toast("Loaded")
+end
+
+function BOSS()
+    	while(true)
+		do
+
+		   rst[1].value = 0
+		   rst[1].freeze = false
+			gg.setValues(rst)
+          gg.addListItems(rst)
+
+			bot[1].value = 71200
+			bot[1].freeze = false
+			auth1[1].value = 16384
+          auth1[1].freeze = false
+			auth2[1].value = 24832
+          auth2[1].freeze = false
+			gg.setValues(auth1)
+			gg.setValues(auth2)
+			gg.setValues(bot)
+
+			rst[1].value = 16842752 
+			gg.setValues(rst)
+
+gg.sleep(3000)
+
+          bot[1].value = 44360
+			bot[1].freeze = false
+			auth1[1].value = 8960
+          auth1[1].freeze = false
+			auth2[1].value = 19712
+          auth2[1].freeze = false
+			gg.setValues(auth1)
+			gg.setValues(auth2)
+			gg.setValues(bot)
+
+			rst[1].value = 16842752 
+			gg.setValues(rst)
+ 
+gg.sleep(3000)
+
+          bot[1].value = 44390
+			bot[1].freeze = false
+			gg.setValues(bot)
+
+			rst[1].value = 16842752 
+			gg.setValues(rst)
+
+gg.sleep(4000)
+
+          rst[1].value = 0
+          rst[1].freeze = true
+			gg.setValues(rst)
+          gg.addListItems(rst)
+          gg.toast("EXCELLENT")
+
+auth2 = gg.getValues(auth2)
+	while(auth2[1].value ~= 9472) 
+			do
+				auth2 = gg.getValues(auth2)
+				gg.sleep(100)
+			 end
+        gg.sleep(100)	
+
+		end
+   gg.sleep(100)
+end
+
+
+------------------------------------------------------------------
+while(true)
+do
+if gg.isVisible(true) 
+then
+HOMEDM=1 gg.setVisible(false) end
+if HOMEDM==1 then MENU() end
+end
+------------------------------------------------------------------
